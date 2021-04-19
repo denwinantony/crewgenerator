@@ -86,6 +86,7 @@ if($link === false){
 $sql = "SELECT * FROM teaminfo where sport='$sport' and age='$age' and level='$level' and turf='$turf'" ;
 if($result = mysqli_query($link, $sql)){
     if(mysqli_num_rows($result) > 0){
+        $x=0;	
         echo "<table>";
             echo "<tr>";
                 echo "<th>email</th>";
@@ -94,7 +95,21 @@ if($result = mysqli_query($link, $sql)){
                 echo "<th>level</th>";
                 echo "<th>turf</th>";
             echo "</tr>";
-        while($row = mysqli_fetch_array($result)){
+        while($row = mysqli_fetch_array($result))
+        {
+        	if ($x%2==0 || $x==0) 
+            {
+            	$y=($x/2)+1;
+            	echo "<tr>";
+                echo "<td>". "Pool-$y" ."</td>";
+                echo "<td>-</td>";
+                echo "<td>-</td>";
+                echo "<td>-</td>";
+                echo "<td>-</td>";
+            	echo "</tr>";
+            	
+            }
+        	$x++;
             echo "<tr>";
                 echo "<td>" . $row['email'] . "</td>";
                 echo "<td>" . $row['sport'] . "</td>";
@@ -102,6 +117,7 @@ if($result = mysqli_query($link, $sql)){
                 echo "<td>" . $row['level'] . "</td>";
                 echo "<td>" . $row['turf'] . "</td>";
             echo "</tr>";
+            
         }
         echo "</table>";
         // Free result set
@@ -116,7 +132,7 @@ if($result = mysqli_query($link, $sql)){
 // Close connection
 mysqli_close($link);
 ?>
-</center>>
+</center>
 
 
 
