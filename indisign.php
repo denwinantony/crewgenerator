@@ -13,50 +13,65 @@ if ($conn->connect_error) {
 
 $email = $_POST['email'];
 $pass = $_POST['pass'];
+$cpass = $_POST['cpass'];
 $uname = $_POST['uname'];
 
-if($email != NULL &&  $pass != NULL && $uname != NULL)
+if($pass==$cpass)
 {
+	if($email != NULL &&  $pass != NULL && $uname != NULL)
+	{
 
-$sqlsel = "Select * from indiuser where email='$email' or uname='$uname' "; 
-    
-    $result = mysqli_query($conn, $sqlsel); 
-     
-    $num = mysqli_num_rows($result);  
-    
+	$sqlsel = "Select * from indiuser where email='$email' or uname='$uname' "; 
+	    
+	    $result = mysqli_query($conn, $sqlsel); 
+	     
+	    $num = mysqli_num_rows($result);  
+	    
 
-    if($num == 0) 
-    { 
-        
-		$sql = "INSERT INTO indiuser (uname ,email, password)
-		VALUES ('$uname', '$email', '$pass')";
+	    if($num == 0) 
+	    { 
+	        
+			$sql = "INSERT INTO indiuser (uname ,email, password)
+			VALUES ('$uname', '$email', '$pass')";
 
-		if ($conn->query($sql) === TRUE) {
-			  echo "<script>
-			alert('Signup Successful. Login to continue');
+			if ($conn->query($sql) === TRUE) {
+				  echo "<script>
+				alert('Signup Successful. Login to continue');
+				window.location.href='indilogin.html';
+				</script>";
+			} 
+			else 
+			{
+			  echo "Error: " . $sql . "<br>" . $conn->error;
+			}
+		}
+		if($num>0)  
+	   { 
+	      	echo "<script>
+			alert('email already in use');
 			window.location.href='indilogin.html';
 			</script>";
-		} 
-		else 
-		{
-		  echo "Error: " . $sql . "<br>" . $conn->error;
-		}
+	   }  
 	}
-	if($num>0)  
-   { 
-      	echo "<script>
-		alert('email already in use');
-		window.location.href='indilogin.html';
-		</script>";
-   }  
+	else
+	{
+		echo "<script>
+			alert('Fill something');
+			window.location.href='indisignup.html';
+			</script>";
+	}
 }
 else
 {
 	echo "<script>
-		alert('Fill something');
+		alert('Password didnt match');
 		window.location.href='indisignup.html';
 		</script>";
 }
+
+
+
+
 
 
 
